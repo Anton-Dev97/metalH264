@@ -1,0 +1,262 @@
+Optimizing for 8K Video Editing
+------------------------------Video Editing Pipeline(Decode with VideoToolbox)-----------------------
+CFDictionarySetValue(decoderSpec,
+ kVTVideoDecoderSpecification_EnableHardwareAcceleratedVideoDecoder,
+ kCFBooleanTrue);
+// This is how you set-up VTDecompressionSession
+VTDecompressionSessionCreate(...,
+ videoFormatDescription, // Input format
+ decoderSpec,
+ destinationImageBufferAttributes,
+ ^(...) {...}, // didDecompress call for a single decompressed frame
+ &session);
+…
+VTDecodeFrameFlags decodeFlags = kVTDecodeFrame_EnableAsynchronousDecompression;
+VTDecompressionSessionDecodeFrame(session,..., decodeFlags, ...);
+…
+VTDecompressionSessionInvalidate(session);
+------------------------------------------------------------------------------------------------------
+
+----------------------------------------Video Editing Pipeline(Metal with Core Video)-----------------
+CVMetalTextureCacheRef sessionMetalCache;
+CVMetalTextureCacheCreate(..., metalDevice, ..., &sessionMetalCache);
+// On a new decoded pixelBuffer callback
+CVMetalTextureRef textureOut; // Keep this around until rendering is done
+CVMetalTextureCacheCreateTextureFromImage(...,
+ sessionMetalCache,
+ pixelBuffer,
+ metalFormat,
+ CVPixelBufferGetWidthOfPlane(pixelBuffer, 0),
+ CVPixelBufferGetHeightOfPlane(pixelBuffer, 0),
+ 0, &textureOut);
+id<MTLTexture> texture = CVMetalTextureGetTexture(textureOut);
+…
+CFRelease(textureOut); // Release when Metal processing is done
+…
+CVBufferRelease(pixelBuffer); // Crucial to do this to keep CVPixelBuffer recycled
+---------------------------------------------------------------------------------------------------------
+
+--------------------------------Video Editing Pipeline(Pixel processing with Metal)----------------------
+func myBlurTextureInPlace(inTexture: MTLTexture, blurRadius: Float, queue: MTLCommandQueue)
+{
+ // Create the usual Metal objects
+ let device = queue.device
+ let buffer = queue.makeCommandBuffer()
+
+ // Create a MPS filter
+ let blur = MPSImageGaussianBlur(device, blurRadius)
+
+ // Attempt to do the work in place
+ let inPlaceTexture = UnsafeMutablePointer<MTLTexture>.allocate(capacity: 1)
+ inPlaceTexture.initialize(inTexture)
+
+ blur.encode(buffer, inPlaceTexture, myAllocator)
+ // The usual Metal enqueue process
+ buffer.commit()
+}
+---------------------------------------------------------------------------------------------------------
+
+-----------------------------Video Editing Pipeline(Encode with VideoToolbox)----------------------------
+VTCopyVideoEncoderList(…); // This is how you get the list of all available encoders
+CFDictionarySetValue(encoderSpec,
+ kVTVideoEncoderSpecification_EnableHardwareAcceleratedVideoEncoder,
+ kCFBooleanTrue);
+CFDictionarySetValue(encoderSpec,
+ kVTVideoEncoderSpecification_PreferredEncoderGPURegistryID,
+ requiredGPU);
+CVPixelBufferPoolRef pixelBufferPool; // Pool to precisely match the format
+pixelBufferPool = VTCompressionSessionGetPixelBufferPool(session);
+…
+CVPixelBufferRef buffer;
+CVPixelBufferPoolCreatePixelBuffer(…, pixelBufferPool, &buffer);
+CVMetalTextureCacheCreateTextureFromImage(...);
+…
+CVBufferRelease(buffer); // Crucial to keep it recycled
+---------------------------------------------------------------------------------------------------------
+
+--------------------------------Managing large asset sizes ----------------------------------------------
+Managing Large Asset Sizes
+	Virtual memory residency
+		High VM page fault cost with large 8K allocations
+		Can impact performance at the start of video playback
+	 	Pre-warm your buffers before playback starts
+
+	Allocation best practices
+		Allocate early to minimize allocation cost mid-workflow
+		Reuse memory by using buffer pools
+		Use Metal heaps for transient allocations
+
+Managing Transient Allocations
+	MTLHeap advantages
+		Allocating from MTLHeap is cheap
+		Heap is made resident as a whole
+		MTLHeap uses memory more efficiently
+		Resources may be aliased and memory may be reused
+--------------------------------------------------------------------------------------------------------
+let heap = device.newHeapWithDescriptor()
+// Allocate uniforms for blur kernel
+let blurUniforms = heap.makeBuffer(length1, options1, offset1)
+executeBlur(input, output1, blurUniforms)
+// Allocate uniforms for color grading
+let colorgradeUniforms = heap.makeBuffer(length2, options2, offset2)
+executeColorgrade(input, output2, colorgradeUniforms)
+...
+// Tell the heap we don’t need those from this point onwards
+blurUniforms.makeAliasable()
+colorgradeUniforms.makeAliasable()
+...
+// Allocate an intermediate buffer for combining the result (reuse the memory)
+let intermediateBuffer = heap.makeBuffer(length3, options3, offset3)
+executeCombinedOutput(output1, output2, intermediateBuffer, output3)
+--------------------------------------------------------------------------------------------------------
+
+-------------------------------------Maintaining a predictable frame rate-------------------------------
+Predictable Frame Pacing with CVDisplayLink
+
+// Set-up CVDisplayLink
+CVDisplayLinkRef displayLink;
+CVDisplayLinkCreateWithCGDisplay(display, &displayLink);
+// Callback to control the cadence
+__block int lastFrameIdx = -1;
+CVDisplayLinkSetOutputHandler(displayLink, ^(…, inNow, inOutput, …)
+{
+ int outFrameIdx = floor(inOutputSec * frameDesiredFrequency);
+ if (outFrameIdx > lastFrameIdx && !presentQueue.empty())
+ {
+ lastFrameIdx = outFrameIdx;
+ id<MTLDrawable> toShow = presentQueue.pop();
+ present(toShow);
+ }
+ return kCVReturnSuccess;
+});
+
+-------------------------------------------------------------------------------------------------------
+
+-----------------------------------Support for High Dynamic Range--------------------------------------
+Common traits of HDR images
+
+Apple’s approach to HDR
+
+HDR rendering with Metal
+
+Best practices 
+	Update content when display brightness changes
+	MTLPixelFormatRGBA16Float recommended for HDR rendering
+	Select color space and transfer function that matches content
+	Bypass tone mapping if contents are already tone mapped
+
+-------------------------------------------------------------------------------------------------------
+// Check for EDR support on display
+NSScreen * screen = view.window.screen;
+CGFloat edrSupport = screen.maximumPotentialExtendedDynamicRangeColorComponentValue;
+// Set color space and transfer function
+const CFStringRef name = kCGColorSpaceDisplayBT2020_PQ_EOTF;
+CGColorSpaceRef colorspace = CGColorSpaceCreateWithName(name);
+metalLayer.colorspace = colorspace;
+CGColorSpaceRelease(colorspace);
+// Set pixel format to 16-bit floating point
+metalLayer.pixelFormat = MTLPixelFormatRGBA16Float;
+// Indicate contents need EDR
+metalLayer.wantsExtendedDynamicRangeContent = YES;
+// In main render loop, update maxEDR
+float maxEDR = screen.maximumExtendedDynamicRangeColorComponentValue; 
+
+
+HDR Pixel Processing in Shaders------------------------------------------------------------------------
+
+CAEDRMetadata *edrMetaData = CAEDRMetadata(minLuminance, maxLuminance, opticalOuputScale)
+metalLayer.edrMetadata = edrMetaData;
+
+-------------------------------------Multi-Threaded Rendering------------------------------------------
+// Create multiple command buffers
+let commandBuffer1 = commandQueue.makeCommandBuffer()!
+let commandBuffer2 = commandQueue.makeCommandBuffer()!
+// Enqueue to define desired GPU execution order
+commandBuffer1.enqueue()
+commandBuffer2.enqueue()
+// Dispatch encoding on separate threads
+queue.async(group: group) {
+ encodeComputeFilter( commandBuffer2, … )
+ commandBuffer2.commit()
+}
+queue.async(group: group) {
+ encodeRenderEffects( commandBuffer1, … )
+ commandBuffer1.commit()
+}
+--------------------------------------------------
+	MTLCommandBuffer
+	Without MTLParallelRenderCommandEncoder
+	With MTLParallelRenderCommandEncoder
+--------------------------------------------------------------------------------------------------------
+// Create parallel encoder and subordinate render command encoder objects
+let parallelRenderEncoder = commandBuffer.makeParallelRenderCommandEncoder(renderPassDesc)!
+let renderEncoder1 = parallelRenderEncoder.makeRenderCommandEncoder()!
+let renderEncoder2 = parallelRenderEncoder.makeRenderCommandEncoder()!
+// Encode different portions of render effects (in any order) on separate threads
+queue.async(group: group) {
+ encodeRenderEffectsPart1(renderEncoder2)
+}
+queue.async(group: group) {
+ encodeRenderEffectsPart2(renderEncoder1)
+}
+// Notify when encoding complete and end the parallel encoder
+group.notify(queue: queue) {
+ parallelRenderEncoder.endEncoding()
+}
+
+-----------------------------Multi GPU Synchronization -------------------------------------------------
+// Create shared event and command queues
+let sharedEvent = deviceA.makeSharedEvent()!
+let commandQueueA = deviceA.makeCommandQueue()!
+let commandQueueB = deviceB.makeCommandQueue()!
+// Encode Frame Rendering
+let commandBufferA = commandQueueA.makeCommandBuffer()!
+encodeRenderFrames(commandBufferA)
+commandBufferA.encodeSignalEvent(sharedEvent)
+commandBufferA.commit()
+// Encode motion analysis (Optical Flow)
+let commandBufferB = commandQueueB.makeCommandBuffer()!
+commandBufferB.encodeWaitEvent(sharedEvent)
+encodeMotionAnalysis(commandBufferB)
+commandBufferB.commit()
+----------------------------------------------------------------------------------------------------------
+
+------------------------------------------Efficient Data Transfers-----------------------------------------
+
+Bandwidth and Mac Pro configurations
+
+Transfer strategies with Infinity Fabric Link
+	Many transfer schemes
+	Consider your software architecture
+	Goal is high bandwidth efficiency
+
+Unlocking challenging workflows
+
+------------------------------------------------------------------------------------------------------------
+Detecting Infinity Fabric Configurations
+
+//Query for Infinity Fabric connections
+let gpuPeerGroupID = device.peerGroupID
+let gpuPeerIndex = device.peerIndex
+let gpuPeerCount = device.peerCount
+let gpuLocationNumber = device.locationNumber 
+
+-------------------------------------------------------------------------------------------------------------
+// Create shared event and command queues for auxiliary and display connected GPUs
+let sharedEvent = deviceAux.makeSharedEvent()!
+let renderTexture = deviceAux.makeTexture()!
+let renderTextureView = renderTexture.makeRemoteTextureViewForDevice(deviceDisp)!
+// Encode rendering of video frame on auxiliary device
+let renderCommandBuffer = commandQueueAux.makeCommandBuffer()!
+let renderCommandEncoder = renderCommandBuffer.makeRenderCommandEncoder()!
+renderCommandEncoder.drawPrimitives()
+renderCommandEncoder.endEncoding()
+renderCommandBuffer.encodeSignalEvent(sharedEvent)
+// Encode blit from auxiliary device to display device
+let blitCommandBuffer = commandQueueDisp.makeCommandBuffer()!
+let blitCommandEncoder = blitCommandBuffer.makeBlitCommandEncoder()!
+blitCommandBuffer.encodeWaitEvent(sharedEvent)
+blitCommandEncoder.copy(remoteTextureView, …)
+blitCommandEncoder.endEncoding()
+
+

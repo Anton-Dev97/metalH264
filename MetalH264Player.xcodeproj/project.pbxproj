@@ -1,0 +1,492 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2C2C44C323B3E2E80015B101 /* RenderingPipeline.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C2C44C223B3E2E80015B101 /* RenderingPipeline.m */; };
+		2C2C44CC23B3E7B80015B101 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C2C44CB23B3E7B80015B101 /* CoreMedia.framework */; };
+		2C2C44D723B3EEC60015B101 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C2C44D623B3EEC60015B101 /* VideoToolbox.framework */; };
+		2C62BE3E23B53FEC00E08023 /* Library.metal in Sources */ = {isa = PBXBuildFile; fileRef = 2C62BE3D23B53FEC00E08023 /* Library.metal */; };
+		2CE1E89623B3D7E000B87471 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE1E89523B3D7E000B87471 /* AppDelegate.m */; };
+		2CE1E89923B3D7E000B87471 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2CE1E89823B3D7E000B87471 /* ViewController.mm */; };
+		2CE1E89B23B3D7E000B87471 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2CE1E89A23B3D7E000B87471 /* Assets.xcassets */; };
+		2CE1E89E23B3D7E000B87471 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2CE1E89C23B3D7E000B87471 /* Main.storyboard */; };
+		2CE1E8A123B3D7E000B87471 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE1E8A023B3D7E000B87471 /* main.m */; };
+		2CE1E8AC23B3D7E100B87471 /* MetalH264PlayerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE1E8AB23B3D7E100B87471 /* MetalH264PlayerTests.m */; };
+		2CE1E8B823B3D93600B87471 /* MetalView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE1E8B723B3D93600B87471 /* MetalView.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		2CE1E8A823B3D7E100B87471 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2CE1E88923B3D7E000B87471 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2CE1E89023B3D7E000B87471;
+			remoteInfo = MetalH264Player;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		2C2C44C123B3E2E80015B101 /* RenderingPipeline.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RenderingPipeline.h; sourceTree = "<group>"; };
+		2C2C44C223B3E2E80015B101 /* RenderingPipeline.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RenderingPipeline.m; sourceTree = "<group>"; };
+		2C2C44CB23B3E7B80015B101 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		2C2C44D623B3EEC60015B101 /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
+		2C62BE3D23B53FEC00E08023 /* Library.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Library.metal; sourceTree = "<group>"; };
+		2CE1E89123B3D7E000B87471 /* MetalH264Player.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MetalH264Player.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2CE1E89423B3D7E000B87471 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		2CE1E89523B3D7E000B87471 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		2CE1E89723B3D7E000B87471 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		2CE1E89823B3D7E000B87471 /* ViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewController.mm; sourceTree = "<group>"; };
+		2CE1E89A23B3D7E000B87471 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		2CE1E89D23B3D7E000B87471 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		2CE1E89F23B3D7E000B87471 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2CE1E8A023B3D7E000B87471 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		2CE1E8A223B3D7E000B87471 /* MetalH264Player.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MetalH264Player.entitlements; sourceTree = "<group>"; };
+		2CE1E8A723B3D7E100B87471 /* MetalH264PlayerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MetalH264PlayerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2CE1E8AB23B3D7E100B87471 /* MetalH264PlayerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MetalH264PlayerTests.m; sourceTree = "<group>"; };
+		2CE1E8AD23B3D7E100B87471 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2CE1E8B623B3D93600B87471 /* MetalView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MetalView.h; sourceTree = "<group>"; };
+		2CE1E8B723B3D93600B87471 /* MetalView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MetalView.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2CE1E88E23B3D7E000B87471 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2C2C44D723B3EEC60015B101 /* VideoToolbox.framework in Frameworks */,
+				2C2C44CC23B3E7B80015B101 /* CoreMedia.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2CE1E8A423B3D7E100B87471 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2C2C44CA23B3E7B80015B101 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2C2C44D623B3EEC60015B101 /* VideoToolbox.framework */,
+				2C2C44CB23B3E7B80015B101 /* CoreMedia.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2CE1E88823B3D7E000B87471 = {
+			isa = PBXGroup;
+			children = (
+				2CE1E89323B3D7E000B87471 /* MetalH264Player */,
+				2CE1E8AA23B3D7E100B87471 /* MetalH264PlayerTests */,
+				2CE1E89223B3D7E000B87471 /* Products */,
+				2C2C44CA23B3E7B80015B101 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		2CE1E89223B3D7E000B87471 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2CE1E89123B3D7E000B87471 /* MetalH264Player.app */,
+				2CE1E8A723B3D7E100B87471 /* MetalH264PlayerTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2CE1E89323B3D7E000B87471 /* MetalH264Player */ = {
+			isa = PBXGroup;
+			children = (
+				2CE1E89423B3D7E000B87471 /* AppDelegate.h */,
+				2CE1E89523B3D7E000B87471 /* AppDelegate.m */,
+				2CE1E89A23B3D7E000B87471 /* Assets.xcassets */,
+				2CE1E89F23B3D7E000B87471 /* Info.plist */,
+				2C62BE3D23B53FEC00E08023 /* Library.metal */,
+				2CE1E8A023B3D7E000B87471 /* main.m */,
+				2CE1E89C23B3D7E000B87471 /* Main.storyboard */,
+				2CE1E8A223B3D7E000B87471 /* MetalH264Player.entitlements */,
+				2CE1E8B623B3D93600B87471 /* MetalView.h */,
+				2CE1E8B723B3D93600B87471 /* MetalView.m */,
+				2C2C44C123B3E2E80015B101 /* RenderingPipeline.h */,
+				2C2C44C223B3E2E80015B101 /* RenderingPipeline.m */,
+				2CE1E89723B3D7E000B87471 /* ViewController.h */,
+				2CE1E89823B3D7E000B87471 /* ViewController.mm */,
+			);
+			path = MetalH264Player;
+			sourceTree = "<group>";
+		};
+		2CE1E8AA23B3D7E100B87471 /* MetalH264PlayerTests */ = {
+			isa = PBXGroup;
+			children = (
+				2CE1E8AB23B3D7E100B87471 /* MetalH264PlayerTests.m */,
+				2CE1E8AD23B3D7E100B87471 /* Info.plist */,
+			);
+			path = MetalH264PlayerTests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		2CE1E89023B3D7E000B87471 /* MetalH264Player */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2CE1E8B023B3D7E100B87471 /* Build configuration list for PBXNativeTarget "MetalH264Player" */;
+			buildPhases = (
+				2CE1E88D23B3D7E000B87471 /* Sources */,
+				2CE1E88E23B3D7E000B87471 /* Frameworks */,
+				2CE1E88F23B3D7E000B87471 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MetalH264Player;
+			productName = MetalH264Player;
+			productReference = 2CE1E89123B3D7E000B87471 /* MetalH264Player.app */;
+			productType = "com.apple.product-type.application";
+		};
+		2CE1E8A623B3D7E100B87471 /* MetalH264PlayerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2CE1E8B323B3D7E100B87471 /* Build configuration list for PBXNativeTarget "MetalH264PlayerTests" */;
+			buildPhases = (
+				2CE1E8A323B3D7E100B87471 /* Sources */,
+				2CE1E8A423B3D7E100B87471 /* Frameworks */,
+				2CE1E8A523B3D7E100B87471 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2CE1E8A923B3D7E100B87471 /* PBXTargetDependency */,
+			);
+			name = MetalH264PlayerTests;
+			productName = MetalH264PlayerTests;
+			productReference = 2CE1E8A723B3D7E100B87471 /* MetalH264PlayerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		2CE1E88923B3D7E000B87471 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1130;
+				ORGANIZATIONNAME = "Lunar Key";
+				TargetAttributes = {
+					2CE1E89023B3D7E000B87471 = {
+						CreatedOnToolsVersion = 11.3;
+					};
+					2CE1E8A623B3D7E100B87471 = {
+						CreatedOnToolsVersion = 11.3;
+						TestTargetID = 2CE1E89023B3D7E000B87471;
+					};
+				};
+			};
+			buildConfigurationList = 2CE1E88C23B3D7E000B87471 /* Build configuration list for PBXProject "MetalH264Player" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 2CE1E88823B3D7E000B87471;
+			productRefGroup = 2CE1E89223B3D7E000B87471 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				2CE1E89023B3D7E000B87471 /* MetalH264Player */,
+				2CE1E8A623B3D7E100B87471 /* MetalH264PlayerTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		2CE1E88F23B3D7E000B87471 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2CE1E89B23B3D7E000B87471 /* Assets.xcassets in Resources */,
+				2CE1E89E23B3D7E000B87471 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2CE1E8A523B3D7E100B87471 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2CE1E88D23B3D7E000B87471 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2CE1E8B823B3D93600B87471 /* MetalView.m in Sources */,
+				2C2C44C323B3E2E80015B101 /* RenderingPipeline.m in Sources */,
+				2CE1E89923B3D7E000B87471 /* ViewController.mm in Sources */,
+				2C62BE3E23B53FEC00E08023 /* Library.metal in Sources */,
+				2CE1E8A123B3D7E000B87471 /* main.m in Sources */,
+				2CE1E89623B3D7E000B87471 /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2CE1E8A323B3D7E100B87471 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2CE1E8AC23B3D7E100B87471 /* MetalH264PlayerTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		2CE1E8A923B3D7E100B87471 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2CE1E89023B3D7E000B87471 /* MetalH264Player */;
+			targetProxy = 2CE1E8A823B3D7E100B87471 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		2CE1E89C23B3D7E000B87471 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2CE1E89D23B3D7E000B87471 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		2CE1E8AE23B3D7E100B87471 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		2CE1E8AF23B3D7E100B87471 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		2CE1E8B123B3D7E100B87471 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = MetalH264Player/MetalH264Player.entitlements;
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = MetalH264Player/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.lunarkey.MetalH264Player;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		2CE1E8B223B3D7E100B87471 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = MetalH264Player/MetalH264Player.entitlements;
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = MetalH264Player/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.lunarkey.MetalH264Player;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		2CE1E8B423B3D7E100B87471 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = G38VA7FQQ2;
+				INFOPLIST_FILE = MetalH264PlayerTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lunarkey.MetalH264PlayerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MetalH264Player.app/Contents/MacOS/MetalH264Player";
+			};
+			name = Debug;
+		};
+		2CE1E8B523B3D7E100B87471 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = G38VA7FQQ2;
+				INFOPLIST_FILE = MetalH264PlayerTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lunarkey.MetalH264PlayerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MetalH264Player.app/Contents/MacOS/MetalH264Player";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2CE1E88C23B3D7E000B87471 /* Build configuration list for PBXProject "MetalH264Player" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2CE1E8AE23B3D7E100B87471 /* Debug */,
+				2CE1E8AF23B3D7E100B87471 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2CE1E8B023B3D7E100B87471 /* Build configuration list for PBXNativeTarget "MetalH264Player" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2CE1E8B123B3D7E100B87471 /* Debug */,
+				2CE1E8B223B3D7E100B87471 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2CE1E8B323B3D7E100B87471 /* Build configuration list for PBXNativeTarget "MetalH264PlayerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2CE1E8B423B3D7E100B87471 /* Debug */,
+				2CE1E8B523B3D7E100B87471 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 2CE1E88923B3D7E000B87471 /* Project object */;
+}
